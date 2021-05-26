@@ -1,5 +1,6 @@
-package lab2.logariphmic;
+package lab2.trigonometric;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,42 +12,42 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 @TestInstance(value=PER_CLASS)
-public class LnTest {
+public class TanTest {
 
     private static final double DELTA = 0.05;
     private static final double ACCURACY = 0.001;
 
-    private LnCalculator ln;
+    private TanCalculator tan;
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/ln_test_data.csv")
-    public void tableValuesTest(double expected, double num, double den) {
-        ln = new LnCalculator(ACCURACY);
-        double actual = ln.calculate(num * PI / den);
+    @CsvFileSource(resources = "/tan_test_data.csv")
+    public void tableValuesStubsTest(double expected, double num, double den) {
+        tan = new TanCalculator(ACCURACY, TrigonomMock.getSinMock(), TrigonomMock.getCosMock());
+        double actual = tan.calculate(num * PI / den);
         assertEquals(expected, actual, DELTA);
     }
 
     @Test
     public void nanStubsTest() {
-        ln = new LnCalculator(ACCURACY);
-        double expected = Double.NaN;
-        double actual = ln.calculate(Double.NaN);
+        tan = new TanCalculator(ACCURACY, TrigonomMock.getSinMock(), TrigonomMock.getCosMock());
+        double expected = Double.POSITIVE_INFINITY;
+        double actual = tan.calculate(Double.NaN);
         assertEquals(expected, actual, DELTA);
     }
 
     @Test
     public void positiveInfinityStubsTest() {
-        ln = new LnCalculator(ACCURACY);
+        tan = new TanCalculator(ACCURACY, TrigonomMock.getSinMock(), TrigonomMock.getCosMock());
         double expected = Double.POSITIVE_INFINITY;
-        double actual = ln.calculate(Double.POSITIVE_INFINITY);
+        double actual = tan.calculate(Double.POSITIVE_INFINITY);
         assertEquals(expected, actual, DELTA);
     }
 
     @Test
     public void negativeInfinityStubsTest() {
-        ln = new LnCalculator(ACCURACY);
-        double expected = Double.NaN;
-        double actual = ln.calculate(Double.NEGATIVE_INFINITY);
+        tan = new TanCalculator(ACCURACY, TrigonomMock.getSinMock(), TrigonomMock.getCosMock());
+        double expected = Double.POSITIVE_INFINITY;
+        double actual = tan.calculate(Double.NEGATIVE_INFINITY);
         assertEquals(expected, actual, DELTA);
     }
 
